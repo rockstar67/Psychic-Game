@@ -2,7 +2,12 @@
 <html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
     <title>Psychic-Game</title>
+
 </head>
 
 <body>
@@ -16,7 +21,6 @@
     Display the result to the player -->
 
     <div id="game-info">
-
         <h1>Guess what letter I'm thinking of</h1>
         <h3 id="wins">Wins: </h3>
         <h3 id="losses">Losses: </h3>
@@ -24,75 +28,80 @@
         <h3 id="guessesSoFar">Your Guesses So Far:</h3>
     </div>
 
-    
 
     <script type="text/javascript">
-        
 
-        // Create variables that hold references to the places in the HTML where we want to display things.
+    // Create variables that hold references to the places in the HTML where we want to display thing    
         var wins = document.getElementById("wins");
-	    var losses = document.getElementById("losses");
-	    var guessesRemaining = document.getElementById("guessesRemaining");
-	    var guessesSoFar = document.getElementById("guessesSoFar");
+        var losses = document.getElementById("losses");
+        var guessesRemaining = document.getElementById("guessesRemaining");
+        var guessesSoFar = document.getElementById("guessesSoFar");
 
-        // Creates an array that lists out all of the letters in the game.
-        var options = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
-
-
-        // Creating variables to hold the number of wins, losses, and ties. They start at 0.
+    //Creates an array that lists all of the letter options (A-Z).
+   
+    var allLetters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+   
+    //Creating variables to hold the number of wins, losses, guesses remaining, guesses so far. They star 0.
         var winsCount = 0;
         var lossesCount = 0;
         var defaultGuessesRemaining = 9;
         var guessesRemainingCount = defaultGuessesRemaining;
-	    var guessesArray = [];
+        var guessesArray = [];
 
+    //Randomly chooses a choice from the options array. This is the Computer's guess.
         var getRandomLetter = function () {
-            randomletter = allLetters[Math.floor(Math.random() *allLetters.length)]
+            randomLetter = allLetters[Math.floor(Math.random() * allLetters.length)]
             console.log(randomLetter);
             return randomLetter
+        }
 
+    //Display the player and computer guesses, and wins/losses/guessesremaining.
+        var displayStats = function () {
+            wins.innerHTML = "Wins: " + winsCount
+            losses.innerHTML = "Losses: " + lossesCount
+            guessesRemaining.innerHTML = "Guesses Left: " + guessesRemainingCount
+            guessesSoFar.innerHTML = "Your Guesses So Far: " + guessesArray
         }
 
         var resetGame = function () {
             guessesArray = [];
             guessesRemainingCount = defaultGuessesRemaining;
             currentLetter = getRandomLetter();
-
         }
 
-        var userwon = function (userletter) {
-            return userletter === currentLetter
+        var userWon = function (userLetter) {
+            return userLetter === currentLetter
         }
 
-        var userLost = function (){
+        var userLost = function () {
             return guessesRemainingCount === 0;
-
         }
 
         var currentLetter = getRandomLetter();
-        displaysStats();
+        displayStats();
 
-        // This function is run whenever the user presses a key.
+        //This function is run whenever the user presses a key.
         document.onkeyup = function (event) {
-            // Determines which key was pressed.
-                var userLetter = event.key;
-                guessesRemainingCount --
-                guessesArray.push(userletter)
-        
+            //Determins which key was pressed.
+            var userLetter = event.key;
+            guessesRemainingCount--
+            guessesArray.push(userLetter)
+
+        //This logic determins the outcome of the game (win/loss/guessremaining), and increments the apropriate number.
             if (userWon(userLetter)) {
-			    winsCount++;
-			    resetGame();
-		} 
+                winsCount++;
+                resetGame();
+            }
 
-		if (userLost()) {
-			    lossesCount++;
-			    resetGame();
-		}
-
-		displayStats();
-        
-        };
+            if (userLost()) {
+                lossesCount++;
+                resetGame();
+            }
+       
+            displayStats();
+        }
     </script>
+
 </body>
 
 </html>
