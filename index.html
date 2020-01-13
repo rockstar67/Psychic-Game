@@ -24,7 +24,7 @@
         <h1>Guess what letter I'm thinking of</h1>
         <h3 id="wins">Wins: </h3>
         <h3 id="losses">Losses: </h3>
-        <h3 id="guessesRemaining">Guesses Left: </h3>
+        <h3 id="guessesLeft">Guesses Left: </h3>
         <h3 id="guessesSoFar">Your Guesses So Far:</h3>
     </div>
 
@@ -34,23 +34,23 @@
     // Create variables that hold references to the places in the HTML where we want to display thing    
         var wins = document.getElementById("wins");
         var losses = document.getElementById("losses");
-        var guessesRemaining = document.getElementById("guessesRemaining");
+        var guessesLeft = document.getElementById("guessesLeft");
         var guessesSoFar = document.getElementById("guessesSoFar");
 
     //Creates an array that lists all of the letter options (A-Z).
    
-    var allLetters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+    var totalLetters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
    
     //Creating variables to hold the number of wins, losses, guesses remaining, guesses so far. They star 0.
         var winsCount = 0;
         var lossesCount = 0;
-        var defaultGuessesRemaining = 9;
-        var guessesRemainingCount = defaultGuessesRemaining;
+        var defaultGuessesLeft = 9;
+        var guessesLeftCount = defaultGuessesLeft;
         var guessesArray = [];
 
     //Randomly chooses a choice from the options array. This is the Computer's guess.
         var getRandomLetter = function () {
-            randomLetter = allLetters[Math.floor(Math.random() * allLetters.length)]
+            randomLetter = totalLetters[Math.floor(Math.random() * totalLetters.length)]
             console.log(randomLetter);
             return randomLetter
         }
@@ -59,13 +59,13 @@
         var displayStats = function () {
             wins.innerHTML = "Wins: " + winsCount
             losses.innerHTML = "Losses: " + lossesCount
-            guessesRemaining.innerHTML = "Guesses Left: " + guessesRemainingCount
+            guessesLeft.innerHTML = "Guesses Left: " + guessesLeftCount
             guessesSoFar.innerHTML = "Your Guesses So Far: " + guessesArray
         }
 
         var resetGame = function () {
             guessesArray = [];
-            guessesRemainingCount = defaultGuessesRemaining;
+            guessesLeftCount = defaultGuessesLeft;
             currentLetter = getRandomLetter();
         }
 
@@ -74,7 +74,7 @@
         }
 
         var userLost = function () {
-            return guessesRemainingCount === 0;
+            return guessesLeftCount === 0;
         }
 
         var currentLetter = getRandomLetter();
@@ -84,10 +84,10 @@
         document.onkeyup = function (event) {
             //Determins which key was pressed.
             var userLetter = event.key;
-            guessesRemainingCount--
+            guessesLeftCount--
             guessesArray.push(userLetter)
 
-        //This logic determins the outcome of the game (win/loss/guessremaining), and increments the apropriate number.
+        //This logic determins the outcome of the game (win/loss/guess left), and increments the apropriate number.
             if (userWon(userLetter)) {
                 winsCount++;
                 resetGame();
