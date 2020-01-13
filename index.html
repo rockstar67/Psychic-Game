@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Psychic-Game</title>
+</head>
+
+<body>
+    <h1>The Psychic Game</h1>
+
+
+    <!-- I need the player to make a choice
+    Computer to make a choice
+    Capture those choices
+    Compare these choices, and determine a win, loss, guesses left, and guesses so far
+    Display the result to the player -->
+
+    <div id="game-info">
+
+        <h1>Guess what letter I'm thinking of</h1>
+        <h3 id="wins">Wins: </h3>
+        <h3 id="losses">Losses: </h3>
+        <h3 id="guessesRemaining">Guesses Left: </h3>
+        <h3 id="guessesSoFar">Your Guesses So Far:</h3>
+    </div>
+
+    
+
+    <script type="text/javascript">
+        
+
+        // Create variables that hold references to the places in the HTML where we want to display things.
+        var wins = document.getElementById("wins");
+	    var losses = document.getElementById("losses");
+	    var guessesRemaining = document.getElementById("guessesRemaining");
+	    var guessesSoFar = document.getElementById("guessesSoFar");
+
+        // Creates an array that lists out all of the letters in the game.
+        var options = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+
+
+        // Creating variables to hold the number of wins, losses, and ties. They start at 0.
+        var winsCount = 0;
+        var lossesCount = 0;
+        var defaultGuessesRemaining = 9;
+        var guessesRemainingCount = defaultGuessesRemaining;
+	    var guessesArray = [];
+
+        var getRandomLetter = function () {
+            randomletter = allLetters[Math.floor(Math.random() *allLetters.length)]
+            console.log(randomLetter);
+            return randomLetter
+
+        }
+
+        var resetGame = function () {
+            guessesArray = [];
+            guessesRemainingCount = defaultGuessesRemaining;
+            currentLetter = getRandomLetter();
+
+        }
+
+        var userwon = function (userletter) {
+            return userletter === currentLetter
+        }
+
+        var userLost = function (){
+            return guessesRemainingCount === 0;
+
+        }
+
+        var currentLetter = getRandomLetter();
+        displaysStats();
+
+        // This function is run whenever the user presses a key.
+        document.onkeyup = function (event) {
+            // Determines which key was pressed.
+                var userLetter = event.key;
+                guessesRemainingCount --
+                guessesArray.push(userletter)
+        
+            if (userWon(userLetter)) {
+			    winsCount++;
+			    resetGame();
+		} 
+
+		if (userLost()) {
+			    lossesCount++;
+			    resetGame();
+		}
+
+		displayStats();
+        
+        };
+    </script>
+</body>
+
+</html>
